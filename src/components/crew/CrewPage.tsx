@@ -3,12 +3,11 @@ import { Crew } from '../../emulator/types'
 import crewService from '../../emulator/crewService'
 import CrewTable from './CrewTable'
 import settingsService from '../../emulator/settingsService'
-import { object } from 'prop-types'
 
 function chooseJob(listWorker: object[], settService: any) { // функція підбору роботи для нового члена команди
   let count = listWorker.length // кількість членів екіпажу
   let chosenWorker: any = listWorker.filter((item: any) => item.job === "unassigned" ? true : false) //  шукаємо членів екіпажу в яких немає роботи
-  if (chosenWorker.length != 0) { // якщо кількість безробітних членів екіпажу дорівнює нулю, то необхідності в пошуку роботи немає, повертаємо -1
+  if (chosenWorker.length !== 0) { // якщо кількість безробітних членів екіпажу дорівнює нулю, то необхідності в пошуку роботи немає, повертаємо -1
     let countWorkers = { // записуємо  кільість членів екіпажу на кожній посаді відповідно
       medic: listWorker.filter((item: any) => item.job === 'medic').length,
       engineer: listWorker.filter((item: any) => item.job === 'engineer').length,
@@ -28,8 +27,7 @@ function chooseJob(listWorker: object[], settService: any) { // функція �
 
 function CrewPage(props: {}) {
   const [crew, setCrew] = useState<Crew>([])
-  const stgService = useState(settingsService.getJobSplit())
-
+  
   useEffect(() => {
     const unsub = crewService.onSummary(
       (onCrew) => {

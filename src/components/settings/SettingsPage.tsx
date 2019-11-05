@@ -8,7 +8,7 @@ interface InputProps {
   value: string
 }
 
-function Input (props: InputProps) {
+function Input(props: InputProps) {
   return <div className='settingInput'>
     <label>
       <span className={props.job}>{props.job}</span>
@@ -24,7 +24,7 @@ function Input (props: InputProps) {
   </div>
 }
 
-function SettingsPage (props: {}) {
+function SettingsPage(props: {}) {
   const [isLoading, setIsLoading] = useState(true)
   const [medic, setMedic] = useState('')
   const [engineer, setEngineer] = useState('')
@@ -42,12 +42,18 @@ function SettingsPage (props: {}) {
     return unsub
   }, [])
 
-  function handleSubmit () {
-    settingsService.setJobSplit({
-      medic: parseInt(medic),
-      engineer: parseInt(engineer),
-      pilot: parseInt(pilot),
-    })
+  function handleSubmit() {
+    if (!Number.isNaN(Number(medic)) && parseInt(medic) > 0 &&
+      !Number.isNaN(Number(engineer)) && parseInt(engineer) > 0 &&
+      !Number.isNaN(Number(pilot)) && parseInt(pilot) > 0)
+      settingsService.setJobSplit({
+        medic: parseInt(medic),
+        engineer: parseInt(engineer),
+        pilot: parseInt(pilot),
+      })
+    else {
+      alert('eror')
+    }
   }
 
   if (isLoading) {
