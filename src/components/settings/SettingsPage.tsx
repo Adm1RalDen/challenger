@@ -42,10 +42,17 @@ function SettingsPage(props: {}) {
     return unsub
   }, [])
 
+  const checkInput = (value: any) => {
+    return value >= 0 && value <= 100
+  }
+
+  const summValue = (...args: any[]) => {
+    return args.reduce((previus, current) => previus + current, 0)
+  }
+  
   function handleSubmit() {
-    if (!Number.isNaN(Number(medic)) && parseInt(medic) > 0 &&
-      !Number.isNaN(Number(engineer)) && parseInt(engineer) > 0 &&
-      !Number.isNaN(Number(pilot)) && parseInt(pilot) > 0)
+    let med = parseInt(medic), eng = parseInt(engineer), pil = parseInt(pilot);
+    if (checkInput(med) && checkInput(eng) && checkInput(pil) && summValue(med, eng, pil) <= 100)
       settingsService.setJobSplit({
         medic: parseInt(medic),
         engineer: parseInt(engineer),
